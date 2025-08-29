@@ -6,4 +6,9 @@ export const ColorBox = styled.div<{color: React.CSSProperties['backgroundColor'
     border: 1px solid #a2a2a2;
 
     background-color: ${props=>props.color};
+
+    &:hover{
+        cursor: pointer;
+        
+    }
 `
