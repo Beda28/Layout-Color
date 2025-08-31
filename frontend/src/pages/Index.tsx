@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { BackgroundA } from "../components/Box/Background"
+import { BackgroundA, BackgroundB } from "../components/Box/Background"
 import { AddColor, ColorList, ColorTable, Group, GroupB, LayOutList, MiddleColorList } from "../components/Box/LayoutBox"
-import { ColorBox } from "../components/Box/TextColorBox"
+import { ColorBox, ColorPickerBox } from "../components/Box/TextColorBox"
 import { AddButton, AddColorButton, ColorText, TitleText } from "../components/P/Text"
+import { BlockPicker } from "react-color"
 
 export const Index = () => {
     type ColorValue = React.CSSProperties['backgroundColor'];
@@ -11,10 +12,15 @@ export const Index = () => {
     const [TextColor, setTextColor] = useState<ColorValue[]>([]);
     const [RadiusColor, setRadiusColor] = useState<ColorValue[]>([]);
     const [HoverColor, setHoverColor] = useState<ColorValue[]>([]);
+    const [op, setop] = useState<boolean>(false);
+    const [width, setwidth] = useState<number>();
+    const [height, setheight] = useState<number>();
+    const [color, setcolor] = useState<ColorValue>();
 
     useEffect(() => {
         setBackground(["#FFFFFF"])
         setTextColor(["#000000"])
+        setcolor("#FFFFFF")
     }, [])
 
     const removeItem = (setFn: React.Dispatch<React.SetStateAction<ColorValue[]>>, index: number) => {
@@ -32,7 +38,28 @@ export const Index = () => {
         {label: "호버색", items: HoverColor, setItems: setHoverColor},
     ]
 
+    const ColorInfo = (e: React.MouseEvent) => {
+        setwidth(e.clientX + 20)
+        setheight(e.clientY)
+    }
+
     return <>
+        <BackgroundB $op={op} onClick={() => setop(false)}>
+            <ColorPickerBox width={width} height={height} onClick={(e) => e.stopPropagation()}>
+                <BlockPicker color={'#FFFFFF'} onChange={color=>
+                    color=color
+                }
+                    // color={value}
+                    // onChange={color => {
+                    //     setItems(prev => {
+                    //         const copy = [...prev];
+                    //         copy[index] = color.hex;
+                    //         return copy;
+                    //     })
+                    // }}
+                />
+            </ColorPickerBox>
+        </BackgroundB>
         <BackgroundA>
             <ColorTable>
                 {colorGroup.map(({label, items, setItems}, index) => (
@@ -40,12 +67,26 @@ export const Index = () => {
                         <TitleText>{label}</TitleText>
                         <MiddleColorList>
                             {items.map((value, index) => (
-                                <Group>
+                                <Group key={index}>
                                     <GroupB>
                                         <AddButton onClick={() => removeItem(setItems, index)}>-</AddButton>
                                         <ColorText>색상 {index + 1}</ColorText>
                                     </GroupB>
-                                    <ColorBox color={value}></ColorBox>
+                                    <ColorBox color={value} onClick={(e) => {setop(true); ColorInfo(e)}}/>
+                                    {/* <ColorPickerBox>
+                                        {pickerIndex === index && (
+                                            <BlockPicker 
+                                                color={value}
+                                                onChange={color => {
+                                                    setItems(prev => {
+                                                        const copy = [...prev];
+                                                        copy[index] = color.hex;
+                                                        return copy;
+                                                    })
+                                                }}
+                                            />
+                                        )}
+                                    </ColorPickerBox> */}
                                 </Group>
                             ))}
                             <AddColor onClick={() => addItem(setItems)}>
@@ -57,6 +98,7 @@ export const Index = () => {
                 ))}
             </ColorTable>
             <LayOutList>
+                
             </LayOutList>
         </BackgroundA>
     </>

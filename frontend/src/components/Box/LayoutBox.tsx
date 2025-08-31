@@ -15,6 +15,7 @@ export const ColorTable = styled(AlCenterDiv)`
 
 export const ColorList = styled(CoulmnDiv)`
     width: 200px;
+    min-width: 200px;
     height: 100%;
     padding-right: 10px;
 
@@ -28,6 +29,7 @@ export const MiddleColorList = styled(CoulmnDiv)`
     border-radius: 5px;
     align-items: center;
     border: 1px solid #333333;
+    position: relative;
     
     overflow-y: auto;
     overflow-x: hidden;
@@ -36,6 +38,12 @@ export const MiddleColorList = styled(CoulmnDiv)`
 export const LayOutList = styled(CenterDiv)`
     width: 90%;
     height: 100%;
+
+    background-color: #1C1C1C;
+    border-radius: 10px;
+    border: 1px solid #333333;
+    padding: 10px;
+    margin: 50px 0 0;
 `
 
 export const Group = styled(SpaceDiv)`

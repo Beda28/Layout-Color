@@ -9,6 +9,17 @@ export const ColorBox = styled.div<{color: React.CSSProperties['backgroundColor'
 
     &:hover{
         cursor: pointer;
-        
+
     }
+`
+
+export const ColorPickerBox = styled.div<{width: React.CSSProperties['width'], height: React.CSSProperties['height']}>`
+    position: absolute;
+    top: ${props=>props.height}px;
+    left: ${props=>props.width}px;
+
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    z-index: 1;
 `
